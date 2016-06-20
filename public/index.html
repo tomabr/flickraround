@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBm4U_1BDdHrkl2AspIX1q_5ZxZBGLs5bI&libraries=places"></script>
+  <script src="assets/main.min.js"></script>
+  <link rel="stylesheet" href="assets/main.css">
+  <title>Flickr Around You</title>
+</head>
+
+<body ng-app="myApp">
+  <main ng-controller="MainController">
+    <div class="row navigation__wrapper" pushpin pushpin-top="0" pushpin-offset="0" pushpin-bottom="Infinity">
+      <ul class="navigation collapsible" data-collapsible="expandable">
+        <li class="col m6 s12 offset-m3">
+          <div class="collapsible-header valign-wrapper active navigation__header">
+            <div class="valign">
+              <button class="navigation__button"><i class="navigation__icon">menu</i></button>
+            </div>
+          </div>
+          <div class="collapsible-body navigation-body">
+            <div class="navigation-logo">
+              <div class="pendulum">
+                <div class="c"></div>
+                <div class="p"></div>
+              </div>
+              <div class="masked">
+                <h1 class="navigation__title method-3">Around you</h1>
+              </div>
+            </div>
+            <div class="container">
+              <div class="row">
+                <input type="text" id="inpt" placeholder="Insert place and tap enter" />
+              </div>
+            </div>
+            <div input-field class="center container">
+              <div class="row">
+                <button class="navigation__button" tooltipped data-position="bottom" data-delay="50" data-tooltip="Get your position" ng-click="takeLocalization()">
+                  <i class="navigation__icon">my_location</i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div id="map"></div>
+    <div class="photos" ng-show="photos.length || preloader">
+       <div class="progress" ng-show="preloader">
+          <div class="indeterminate"></div>
+      </div>
+
+      <flex-slider slide="photo in photos track by photo.url" animation="slide" control-nav="false" item-width="210" prev-text="" next-text="">
+        <li>
+          <a modal href="#modal" ng-click="setImage(photo)">
+          <img ng-src="{{photo.url}}" data-caption="{{photo.title}}"/>
+          </a>
+        </li>
+      </flex-slider>
+    </div>
+    <div id="modal" class="modal" ng-show="photos">
+      <figure>
+      <img ng-src="{{image.url}}" class="modal__photo">
+      <figcaption class="modal__caption">{{image.title}}</figcaption>
+      </figure>
+    </div>
+  </main>
+</body>
+
+</html>
